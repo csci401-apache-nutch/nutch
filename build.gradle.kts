@@ -148,6 +148,12 @@ val classpathCollection: FileCollection = layout.files(
 )
 val classPath: String = classpathCollection.asPath
 
+// the plugins classpath
+val pluginsClasspathCollection: FileCollection = layout.files(
+    file("${project.properties["build.plugins"]}"),
+    fileTree(mapOf("dir" to project.properties["build.lib.dir"], "include" to listOf("*.jar")))
+)
+
 // test classpath
 val testClasspathCollection: FileCollection = layout.files(
     file("${project.properties["test.build.classes"]}"),
@@ -303,13 +309,22 @@ subprojects {
         if(!project.name.equals("src") && !project.name.equals("plugin"))
         {
          
-         dependsOn(":init-nutch","compileJava")
-         classpath = classpathCollection
-         include("org/apache/nutch/indexer/*.java")
-         source = fileTree(File(File("${project.properties["plugins.dir"]}", project.name), "src"))
-         destinationDirectory.set(layout.projectDirectory.dir("${project.properties["build.plugins"]}"))
-         println("$project.name")
-         println(File(File("${project.properties["plugins.dir"]}", project.name), "src"))
+        	dependsOn(":init-nutch","compileJava")
+        	source = fileTree(File(File("${project.properties["plugins.dir"]}", project.name), "src"))
+        	include("org/apache/nutch/indexer/*.java")
+        	destinationDirectory.set(layout.projectDirectory.dir("${project.properties["build.classes"]}"))
+        	classpath = classpathCollection
+        	sourceCompatibility = "${project.properties["javac.version"]}"
+    		targetCompatibility = "${project.properties["javac.version"]}"
+    		options.annotationProcessorPath = classpathCollection
+	    	options.sourcepath = layout.files("${project.properties["src.dir"]}")
+	    	options.compilerArgs.add("-Xlint:-path")
+	    	options.encoding = "${project.properties["build.encoding"]}"
+	    	options.isDebug = "${project.properties["javac.debug"]}" == "on"
+	    	options.isDeprecation = "${project.properties["javac.deprecation"]}" == "on"
+	    
+	        println("$project.name")
+	        println(File(File("${project.properties["plugins.dir"]}", project.name), "src"))
          
         }
     }
