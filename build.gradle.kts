@@ -295,12 +295,19 @@ tasks.register<Copy>("copy-libs") {
     into("${project.properties["build.lib.dir"]}")
 }
 
-tasks.register<GradleBuild>("compile-plugins") {
-    description = "Compile plugins only"
-    dependsOn("init-nutch","resolve-default")
-    //TODO Once plugins are finished, uncomment the following lines:
-    // dir = file("src/plugin")
-    // tasks = listOf("deploy")
+subprojects {
+    //subprojects require jar 
+    
+    tasks.register("compile-plugins"){
+        //avoid assigning to folders
+        if(!project.name.equals("src") && !project.name.equals("plugin"))
+        {
+         dependsOn("tasks")
+         println("$project.name")
+         println("jar")
+        }
+    }
+    
 }
 
 tasks.jar {
