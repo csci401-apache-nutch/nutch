@@ -298,13 +298,14 @@ tasks.register<Copy>("copy-libs") {
 subprojects {
     //subprojects require jar 
     
-    tasks.register("compile-plugins"){
+    tasks.register<JavaCompile>("compile-plugins"){
         //avoid assigning to folders
         if(!project.name.equals("src") && !project.name.equals("plugin"))
         {
-         dependsOn("tasks")
+         source = fileTree( File("${project.properties["plugins.dir"]}", project.name))
+         destinationDirectory.set(layout.projectDirectory.dir("${project.properties["build.plugins"]}"))
          println("$project.name")
-         println("jar")
+         println(File("${project.properties["plugins.dir"]}", project.name))
         }
     }
     
