@@ -302,6 +302,7 @@ subprojects {
         //avoid assigning to folders
         if(!project.name.equals("src") && !project.name.equals("plugin"))
         {
+         dependsOn("compileJava")
          source = fileTree( File("${project.properties["plugins.dir"]}", project.name))
          destinationDirectory.set(layout.projectDirectory.dir("${project.properties["build.plugins"]}"))
          println("$project.name")
