@@ -302,7 +302,9 @@ subprojects {
         //avoid assigning to folders
         if(!project.name.equals("src") && !project.name.equals("plugin"))
         {
+         
          dependsOn(":init-nutch","compileJava")
+         classpath = classpathCollection
          include("org/apache/nutch/indexer/*.java")
          source = fileTree(File(File("${project.properties["plugins.dir"]}", project.name), "src"))
          destinationDirectory.set(layout.projectDirectory.dir("${project.properties["build.plugins"]}"))
