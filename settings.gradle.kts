@@ -19,7 +19,7 @@ rootProject.name = "nutch"
 
 // include("src:plugin:any23")
 // include("src:plugin:build-plugin.xml")
-// include("src:plugin:creativecommons")
+ include("src:plugin:creativecommons")
 // include("src:plugin:exchange-jexl")
 // include("src:plugin:feed")
 // include("src:plugin:headings")
@@ -77,7 +77,7 @@ rootProject.name = "nutch"
 // include("src:plugin:scoring-orphan")
 // include("src:plugin:scoring-similarity")
 // include("src:plugin:subcollection")
-include("src:plugin:tld")
+//include("src:plugin:tld")
 // include("src:plugin:urlfilter-automaton")
 // include("src:plugin:urlfilter-domain")
 // include("src:plugin:urlfilter-domaindenylist")
